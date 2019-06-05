@@ -92,10 +92,4 @@ class DogController {
 
         return mav
     }
-
-
-
-
-
-
 }
