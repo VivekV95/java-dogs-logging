@@ -7,10 +7,12 @@ import com.lambdaschool.dogsinitial.DogsinitialApplication
 import com.lambdaschool.dogsinitial.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.ModelAndView
 
 @RestController
 @RequestMapping("/dogs")
@@ -36,6 +38,14 @@ class DogController {
 //        val rtnDogs = DogsinitialApplication.getOurDogList().findDogs({ d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()) })
         val rtnDogs = DogsinitialApplication.ourDogList.findDogs(CheckDog { d -> d.breed?.toUpperCase() == breed.toUpperCase() })
         return ResponseEntity(rtnDogs, HttpStatus.OK)
+    }
+    @GetMapping(value = ["/dogtable"], produces = ["application/json"])
+    fun displayDogTable(): ModelAndView {
+        val mav = ModelAndView()
+        mav.viewName = "dogs"
+        mav.addObject("dogList", DogsinitialApplication.ourDogList.dogList)
+
+        return mav
     }
 
 
