@@ -43,10 +43,24 @@ class DogController {
     fun displayDogTable(): ModelAndView {
         val mav = ModelAndView()
         mav.viewName = "dogs"
-        mav.addObject("dogList", DogsinitialApplication.ourDogList.dogList)
+        mav.addObject("dogList", DogsinitialApplication.ourDogList.dogList.sortedBy { it.breed })
 
         return mav
     }
+
+    @GetMapping(value = ["/apartmentdogtable"], produces = ["application/json"])
+    fun displayApartmentDogTable(): ModelAndView {
+        val mav = ModelAndView()
+        mav.viewName = "dogs"
+        mav.addObject("dogList",
+                DogsinitialApplication.ourDogList.dogList.filter { it.isApartmentSuitable }.sortedBy { it.breed })
+
+        return mav
+    }
+
+
+
+
 
 
 }
