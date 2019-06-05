@@ -50,4 +50,17 @@ class RestExceptionHandler: ResponseEntityExceptionHandler() {
 
         return ResponseEntity(errorDetail, HttpStatus.NOT_FOUND)
     }
+
+    override fun handleNoHandlerFoundException(ex: NoHandlerFoundException,
+                                               headers: HttpHeaders, status: HttpStatus,
+                                               request: WebRequest): ResponseEntity<Any> {
+        val errorDetail = ErrorDetail()
+        errorDetail.setTimestamp(Date().time)
+        errorDetail.status = HttpStatus.NOT_FOUND.value()
+        errorDetail.title = ex.requestURL
+        errorDetail.detail = request.getDescription(true)
+        errorDetail.developerMessage = "Rest handler not found (check for valid URI"
+
+        return ResponseEntity(errorDetail, null, HttpStatus.NOT_FOUND)
+    }
 }
