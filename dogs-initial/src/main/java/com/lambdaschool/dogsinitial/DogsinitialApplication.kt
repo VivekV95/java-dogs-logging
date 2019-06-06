@@ -58,6 +58,7 @@ open class DogsinitialApplication {
         return BindingBuilder.bind(appQueueHigh()).to(appExchange()).with(QUEUE_NAME_HIGH)
     }
 
+    @Bean
     open fun produceJackson2MessageConverter(): Jackson2JsonMessageConverter {
         return Jackson2JsonMessageConverter()
     }

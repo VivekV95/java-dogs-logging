@@ -42,7 +42,7 @@ class DogController {
             logger.info { "dogs/dogs accessed" +
                     " on ${SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z").format(Date())}" }
             val message = MessageDetail("/dogs/dogs accessed on" +
-                    " ${SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z").format(Date())}", 7, false)
+                    " ${Date()}", 7, false)
             rt.convertAndSend(DogsinitialApplication.QUEUE_NAME_HIGH, message)
             return ResponseEntity(DogsinitialApplication.ourDogList.dogList, HttpStatus.OK)
         }
@@ -54,7 +54,7 @@ class DogController {
     fun getDogDetail(@PathVariable id: Long): ResponseEntity<*> {
         logger.info { "dogs/$id accessed on ${SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z").format(Date())}" }
         val message = MessageDetail("/dogs/$id accessed on" +
-                " ${SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z").format(Date())}", 2, true)
+                " ${Date()}", 2, true)
         rt.convertAndSend(DogsinitialApplication.QUEUE_NAME_LOW, message)
         val rtnDog = DogsinitialApplication.ourDogList.findDog(CheckDog
         { d -> d.id == id }) ?: throw ResourceNotFoundException("Dog with id $id not found")
